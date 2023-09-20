@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 // Models
 use App\Models\Post;
 
+// Requests
+use App\Http\Requests\Post\StorePostRequest;
+
 class PostController extends Controller
 {
     /**
@@ -17,7 +20,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        dd($posts);
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -25,15 +28,23 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $formData = $request->validated();
+
+        $post = Post::create([
+            'title' => $formData['title'],
+            'slug' => str()->slug($formData['title']),
+            'content' => $formData['content'],
+        ]);
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -41,7 +52,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
