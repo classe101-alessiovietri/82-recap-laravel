@@ -1,4 +1,4 @@
-1. Migration ed eseguirla
+1. Migration ed eseguirla           OK
 2. Model
 3. Controller
 4. Rotte
