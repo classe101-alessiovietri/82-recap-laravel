@@ -1,5 +1,5 @@
 1. Migration ed eseguirla           OK
-2. Model
+2. Model                            OK
 3. Controller
 4. Rotte
 5. Seeder
