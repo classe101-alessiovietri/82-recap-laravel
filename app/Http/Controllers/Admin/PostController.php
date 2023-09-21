@@ -10,6 +10,7 @@ use App\Models\Post;
 
 // Requests
 use App\Http\Requests\Post\StorePostRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -44,38 +45,48 @@ class PostController extends Controller
             'content' => $formData['content'],
         ]);
 
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $formData = $request->validated();
+
+        $post->update([
+            'title' => $formData['title'],
+            'slug' => str()->slug($formData['title']),
+            'content' => $formData['content'],
+        ]);
+
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 }
