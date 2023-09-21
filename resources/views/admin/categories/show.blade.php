@@ -26,9 +26,6 @@
                             {{ $category->slug }}
                         </td>
                         <td>
-                            <a href="{{ route('admin.categories.show', ['category' => $category->id]) }}" class="btn btn-primary">
-                                Vedi
-                            </a>
                             <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" class="btn btn-warning">
                                 Modifica
                             </a>

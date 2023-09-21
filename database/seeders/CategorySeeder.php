@@ -22,8 +22,20 @@ class CategorySeeder extends Seeder
             Category::truncate();
         });
 
-        for ($i = 0; $i < 10; $i++) {
-            $title = substr(fake()->word(), 0, 255);
+        $categories = [
+            'Frontend',
+            'Backend',
+            'PHP',
+            'HTML',
+            'CSS',
+            'JavaScript',
+            'ChatGPT',
+            'Boolean',
+            'Teacher',
+            'Studenti',
+        ];
+
+        foreach ($categories as $title) {
             $slug = str()->slug($title);
 
             Category::create([
@@ -31,5 +43,15 @@ class CategorySeeder extends Seeder
                 'slug' => $slug
             ]);
         }
+        
+        // for ($i = 0; $i < 10; $i++) {
+        //     $title = substr(fake()->word(), 0, 255);
+        //     $slug = str()->slug($title);
+
+        //     Category::create([
+        //         'title' => $title,
+        //         'slug' => $slug
+        //     ]);
+        // }
     }
 }

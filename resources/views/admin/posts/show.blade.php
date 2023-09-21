@@ -28,17 +28,18 @@
                             {{ $post->slug }}
                         </td>
                         <td>
-                            <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
-                                {{ $post->category->title }}
-                            </a>
+                            @if ($post->category)
+                                <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
+                                    {{ $post->category->title }}
+                                </a>
+                            @else
+                                -
+                            @endif
                         </td>
                         <td>
                             {{ $post->content }}
                         </td>
                         <td>
-                            <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">
-                                Vedi
-                            </a>
                             <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-warning">
                                 Modifica
                             </a>

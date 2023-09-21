@@ -32,7 +32,11 @@
                                 {{ $post->slug }}
                             </td>
                             <td>
-                                {{ $post->category->title }}
+                                @if ($post->category)
+                                    {{ $post->category->title }}
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>
                                 <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">

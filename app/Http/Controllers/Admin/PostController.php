@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 // Models
 use App\Models\Post;
+use App\Models\Category;
 
 // Requests
 use App\Http\Requests\Post\StorePostRequest;
@@ -29,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -43,6 +46,7 @@ class PostController extends Controller
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
             'content' => $formData['content'],
+            'category_id' => $formData['category_id'],
         ]);
 
         return redirect()->route('admin.posts.show', compact('post'));
@@ -61,7 +65,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -75,6 +81,7 @@ class PostController extends Controller
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
             'content' => $formData['content'],
+            'category_id' => $formData['category_id'],
         ]);
 
         return redirect()->route('admin.posts.show', compact('post'));

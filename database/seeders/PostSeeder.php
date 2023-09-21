@@ -22,13 +22,17 @@ class PostSeeder extends Seeder
             $title = substr(fake()->sentence(), 0, 255);
             $slug = str()->slug($title);
             $content = fake()->paragraph();
-            $randomCategory = Category::inRandomOrder()->first();
+
+            $randomCategoryId = null;
+            if (fake()->boolean()) {
+                $randomCategoryId = Category::inRandomOrder()->first()->id;
+            }
 
             Post::create([
                 'title' => $title,
                 'slug' => $slug,
                 'content' => $content,
-                'category_id' => $randomCategory->id
+                'category_id' => $randomCategoryId
             ]);
         }
     }
