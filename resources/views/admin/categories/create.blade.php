@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Aggiungi un post')
+@section('page-title', 'Aggiungi una categoria')
 
 @section('main-content')
     <div class="row">
@@ -15,17 +15,12 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.posts.store') }}" method="post">
+            <form action="{{ route('admin.categories.store') }}" method="post">
                 @csrf
 
                 <div>
                     <label for="">Titolo</label>
                     <input type="text" name="title" required maxlength="255" value="{{ old('title') }}">
-                </div>
-
-                <div>
-                    <label for="">Contenuto</label>
-                    <textarea name="content" rows="3" required>{{ old('content') }}</textarea>
                 </div>
 
                 <div>

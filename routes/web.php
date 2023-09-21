@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::prefix('admin')          // Il prefix è il prefisso dell'URI (cioè la p
     Route::resource('posts', AdminPostController::class);
     // Questo comando crea 7 rotte:
     // 1 - Route::get('/admin/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
+
+    Route::resource('categories', AdminCategoryController::class);
 
 });
 

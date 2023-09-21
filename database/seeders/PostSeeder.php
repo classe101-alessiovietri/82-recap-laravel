@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 // Models
 use App\Models\Post;
+use App\Models\Category;
 
 class PostSeeder extends Seeder
 {
@@ -21,11 +22,13 @@ class PostSeeder extends Seeder
             $title = substr(fake()->sentence(), 0, 255);
             $slug = str()->slug($title);
             $content = fake()->paragraph();
+            $randomCategory = Category::inRandomOrder()->first();
 
             Post::create([
                 'title' => $title,
                 'slug' => $slug,
                 'content' => $content,
+                'category_id' => $randomCategory->id
             ]);
         }
     }

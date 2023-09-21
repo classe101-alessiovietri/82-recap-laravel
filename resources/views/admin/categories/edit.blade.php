@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Aggiungi un post')
+@section('page-title', 'Modifica '.$category->title)
 
 @section('main-content')
     <div class="row">
@@ -15,22 +15,18 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.posts.store') }}" method="post">
+            <form action="{{ route('admin.categories.update', ['category' => $category->id]) }}" method="post">
                 @csrf
+                @method('PUT')
 
                 <div>
                     <label for="">Titolo</label>
-                    <input type="text" name="title" required maxlength="255" value="{{ old('title') }}">
+                    <input type="text" name="title" required maxlength="255" value="{{ old('title', $category->title) }}">
                 </div>
 
                 <div>
-                    <label for="">Contenuto</label>
-                    <textarea name="content" rows="3" required>{{ old('content') }}</textarea>
-                </div>
-
-                <div>
-                    <button type="submit" class="btn btn-success">
-                        + Aggiungi
+                    <button type="submit" class="btn btn-warning">
+                        Aggiorna
                     </button>
                 </div>
             </form>
