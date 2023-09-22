@@ -5,29 +5,17 @@
 @section('main-content')
     <div class="row">
         <div class="col">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Titolo</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Contenuto</th>
-                        <th scope="col">Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            {{ $post->id }}
-                        </th>
-                        <td>
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h1>
                             {{ $post->title }}
-                        </td>
-                        <td>
-                            {{ $post->slug }}
-                        </td>
-                        <td>
+                        </h1>
+                        <h6>
+                            Slug: {{ $post->slug }}
+                        </h6>
+                        <div>
+                            Categoria:
                             @if ($post->category)
                                 <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
                                     {{ $post->category->title }}
@@ -35,15 +23,13 @@
                             @else
                                 -
                             @endif
-                        </td>
-                        <td>
-                            {{ $post->content }}
-                        </td>
-                        <td>
+                        </div>
+                        <div>
+
                             <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-warning">
                                 Modifica
                             </a>
-                            <form action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questo post?');">
+                            <form class="d-inline-block" action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questo post?');">
                                 @csrf
                                 @method('DELETE')
 
@@ -51,10 +37,33 @@
                                     Elimina
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <p>
+                        {{ $post->content }}
+                    </p>
+
+                    <hr>
+
+                    <div>
+                        <h3>
+                            Tags:
+                        </h3>
+                        <div>
+                            @forelse ($post->tags as $tag)
+                                <span class="badge rounded-pill text-bg-primary">
+                                    {{ $tag->title }}
+                                </span>
+                            @empty
+                                Nessun tag associato a questo post
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

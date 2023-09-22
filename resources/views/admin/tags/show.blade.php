@@ -43,4 +43,22 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col bg-light">
+            <h2>
+                Post con questo tag
+            </h2>
+
+            <ul>
+                @foreach ($tag->posts as $post)
+                    <li>
+                        <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}">
+                            {{ $post->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
 @endsection

@@ -4,7 +4,7 @@
 
 @section('main-content')
     <div class="row">
-        <div class="col">
+        <div class="col bg-info-subtle">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -48,6 +48,43 @@
                             </option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Tag</label>
+                    @foreach ($tags as $tag)
+                        <div class="form-check form-check-inline">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="tags[]"
+                                id="tag-{{ $tag->id }}"
+                                value="{{ $tag->id }}"
+                                @if (
+                                    $errors->any()
+                                )
+                                    {{-- Qui ci entro solo quando ho già inviato il form, ma la validazione non è andata a buon fine --}}
+
+                                    @if (
+                                        in_array(
+                                            $tag->id,
+                                            old('tags', [])
+                                        )
+                                    )
+                                        checked
+                                    @endif
+                                @elseif (
+                                    // $tag->id compare in quelli precedentemente associati al post
+                                    $post->tags->contains($tag)
+                                )
+                                    checked
+                                @endif
+                                >
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">
+                                {{ $tag->title }}
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
 
                 <div>

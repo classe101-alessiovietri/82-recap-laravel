@@ -13,4 +13,12 @@ class Tag extends Model
         'title',
         'slug'
     ];
+
+    /*
+        Relationships
+    */
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
 }

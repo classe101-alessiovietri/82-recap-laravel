@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 // Models
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Tag;
 
 // Requests
 use App\Http\Requests\Post\StorePostRequest;
@@ -31,8 +32,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -48,6 +50,14 @@ class PostController extends Controller
             'content' => $formData['content'],
             'category_id' => $formData['category_id'],
         ]);
+
+        if (isset($formData['tags'])) {
+            foreach ($formData['tags'] as $tagId) {
+                                                //  post_id  |  tag_id
+                                                // ----------+---------
+                $post->tags()->attach($tagId);  // $post->id |  $tagId
+            }
+        }
 
         return redirect()->route('admin.posts.show', compact('post'));
     }
@@ -66,8 +76,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -83,6 +94,13 @@ class PostController extends Controller
             'content' => $formData['content'],
             'category_id' => $formData['category_id'],
         ]);
+
+        if (isset($formData['tags'])) {
+            $post->tags()->sync($formData['tags']);
+        }
+        else {
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', compact('post'));
     }

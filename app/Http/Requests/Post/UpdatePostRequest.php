@@ -28,6 +28,8 @@ class UpdatePostRequest extends FormRequest
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
         ];
     }
 }
