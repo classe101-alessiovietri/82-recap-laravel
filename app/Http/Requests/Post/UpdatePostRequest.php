@@ -30,6 +30,8 @@ class UpdatePostRequest extends FormRequest
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
+            'cover_img' => 'nullable|image|max:4096',
+            'remove_cover_img' => 'nullable|boolean',
         ];
     }
 }

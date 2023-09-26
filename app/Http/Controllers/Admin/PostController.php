@@ -14,6 +14,9 @@ use App\Models\Tag;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 
+// Helpers
+use Illuminate\Support\Facades\Storage;
+
 class PostController extends Controller
 {
     /**
@@ -44,11 +47,17 @@ class PostController extends Controller
     {
         $formData = $request->validated();
 
+        $coverImagePath = null;
+        if (isset($formData['cover_img'])) {
+            $coverImagePath = Storage::put('uploads/images', $formData['cover_img']);
+        }
+
         $post = Post::create([
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
             'content' => $formData['content'],
             'category_id' => $formData['category_id'],
+            'cover_img' => $coverImagePath
         ]);
 
         if (isset($formData['tags'])) {
@@ -88,11 +97,28 @@ class PostController extends Controller
     {
         $formData = $request->validated();
 
+        $coverImagePath = $post->cover_img;
+        if (isset($formData['cover_img'])) {
+            if ($post->cover_img) {
+                Storage::delete($post->cover_img);
+            }
+
+            $coverImagePath = Storage::put('uploads/images', $formData['cover_img']);
+        }
+        else if (isset($formData['remove_cover_img'])) {
+            if ($post->cover_img) {
+                Storage::delete($post->cover_img);
+            }
+
+            $coverImagePath = null;
+        }
+
         $post->update([
             'title' => $formData['title'],
             'slug' => str()->slug($formData['title']),
             'content' => $formData['content'],
             'category_id' => $formData['category_id'],
+            'cover_img' => $coverImagePath,
         ]);
 
         if (isset($formData['tags'])) {

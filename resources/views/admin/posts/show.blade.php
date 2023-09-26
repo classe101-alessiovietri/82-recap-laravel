@@ -24,6 +24,13 @@
                                 -
                             @endif
                         </div>
+                        @if ($post->cover_img)
+                            <div>
+                                {{-- <img src="/storage/gatto-in-storage.jpg" alt="{{ $post->title }}"> --}}
+                                {{-- <img src="/storage/{{ $post->cover_img }}" alt="{{ $post->title }}"> --}}
+                                <img src="{{ asset('storage/' . $post->cover_img) }}" alt="{{ $post->title }}">
+                            </div>
+                        @endif
                         <div>
 
                             <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-warning">
