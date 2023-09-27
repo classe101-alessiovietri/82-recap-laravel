@@ -39,7 +39,13 @@ class PostSeeder extends Seeder
 
             $coverImg = null;
             if (fake()->boolean()) {
-                $coverImg = 'uploads/images/'.fake()->image(storage_path('app/public/uploads/images'), 360, 360, 'animals', false, true, 'cats', false, 'jpg');
+                $coverImg = fake()->image(storage_path('app/public/uploads/images'), 360, 360, 'animals', false, true, 'cats', false, 'jpg');
+                if ($coverImg != '') {
+                    $coverImg = 'uploads/images/'.$coverImg;
+                }
+                else {
+                    $coverImg = null;
+                }
             }
 
             Post::create([
