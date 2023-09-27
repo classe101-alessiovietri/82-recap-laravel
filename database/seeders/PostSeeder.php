@@ -9,6 +9,10 @@ use Illuminate\Database\Seeder;
 use App\Models\Post;
 use App\Models\Category;
 
+// Helpers
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+
 class PostSeeder extends Seeder
 {
     /**
@@ -16,7 +20,12 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        Post::truncate();
+        Schema::withoutForeignKeyConstraints(function () {
+            Post::truncate();
+        });
+
+        Storage::deleteDirectory('uploads/images');
+        Storage::makeDirectory('uploads/images');
 
         for ($i = 0; $i < 30; $i++) {
             $title = substr(fake()->sentence(), 0, 255);
@@ -28,11 +37,17 @@ class PostSeeder extends Seeder
                 $randomCategoryId = Category::inRandomOrder()->first()->id;
             }
 
+            $coverImg = null;
+            if (fake()->boolean()) {
+                $coverImg = 'uploads/images/'.fake()->image(storage_path('app/public/uploads/images'), 360, 360, 'animals', false, true, 'cats', false, 'jpg');
+            }
+
             Post::create([
                 'title' => $title,
                 'slug' => $slug,
                 'content' => $content,
-                'category_id' => $randomCategoryId
+                'category_id' => $randomCategoryId,
+                'cover_img' => $coverImg
             ]);
         }
     }
