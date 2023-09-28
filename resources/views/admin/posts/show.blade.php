@@ -24,11 +24,11 @@
                                 -
                             @endif
                         </div>
-                        @if ($post->cover_img)
+                        @if ($post->full_cover_img)
                             <div>
                                 {{-- <img src="/storage/gatto-in-storage.jpg" alt="{{ $post->title }}"> --}}
                                 {{-- <img src="/storage/{{ $post->cover_img }}" alt="{{ $post->title }}"> --}}
-                                <img src="{{ asset('storage/' . $post->cover_img) }}" alt="{{ $post->title }}">
+                                <img src="{{ $post->full_cover_img }}" alt="{{ $post->title }}">
                             </div>
                         @endif
                         <div>

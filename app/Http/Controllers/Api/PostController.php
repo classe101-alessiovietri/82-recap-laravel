@@ -13,7 +13,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with('category', 'tags')->paginate(3);
+        $posts = Post::with('category', 'tags')->paginate(10);
 
         return response()->json([
             'success' => true,
@@ -29,13 +29,13 @@ class PostController extends Controller
             return response()->json([
                 'success' => true,
                 'results' => $post
-            ]);
+            ], 200);
         }
         else {
             return response()->json([
                 'success' => false,
                 'message' => 'Not found'
-            ]);
+            ], 404);
         }
     }
 

@@ -17,6 +17,22 @@ class Post extends Model
         'cover_img'
     ];
 
+    protected $appends = [
+        'full_cover_img'
+    ];
+
+    /*
+        Custom attributes
+    */
+    public function getFullCoverImgAttribute()
+    {
+        if ($this->cover_img) {
+            return asset('storage/' . $this->cover_img);
+        }
+
+        return null;
+    }
+
     /*
         Relationships
     */

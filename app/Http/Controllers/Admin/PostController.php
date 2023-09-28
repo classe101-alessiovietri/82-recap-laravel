@@ -139,7 +139,7 @@ class PostController extends Controller
         if ($post->cover_img) {
             Storage::delete($post->cover_img);
         }
-        
+
         $post->delete();
 
         return redirect()->route('admin.posts.index');
